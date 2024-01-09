@@ -1,0 +1,18 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    IM\Fabric\Bundle\SwaggerBundle\:
+        resource: '../src/{Service}'
+
+    IM\Fabric\Bundle\SwaggerBundle\Swagger\SwaggerDecorator:
+        decorates: 'api_platform.openapi.normalizer'
+        arguments:
+          [
+              '@IM\Fabric\Bundle\SwaggerBundle\Swagger\SwaggerDecorator.inner',
+              '%kernel.project_dir%/config/services/swagger.yaml',
+          ]
+        autoconfigure: false
+        autowire: true
