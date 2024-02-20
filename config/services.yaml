@@ -16,3 +16,6 @@ services:
           ]
         autoconfigure: false
         autowire: true
+
+    Symfony\Component\Filesystem\Filesystem: ~
+    Symfony\Component\Yaml\Parser: ~
