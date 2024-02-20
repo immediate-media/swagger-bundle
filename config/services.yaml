@@ -4,6 +4,9 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    Symfony\Component\Filesystem\Filesystem: ~
+    Symfony\Component\Yaml\Parser: ~
+
     IM\Fabric\Bundle\SwaggerBundle\:
         resource: '../src/{Service}'
 
@@ -16,6 +19,3 @@ services:
           ]
         autoconfigure: false
         autowire: true
-
-    Symfony\Component\Filesystem\Filesystem: ~
-    Symfony\Component\Yaml\Parser: ~
