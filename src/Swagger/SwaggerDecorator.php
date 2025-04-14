@@ -116,4 +116,9 @@ class SwaggerDecorator implements NormalizerInterface
 
         return $value;
     }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return $this->defaultDecorator->getSupportedTypes($format);
+    }
 }
