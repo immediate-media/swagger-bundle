@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace IM\Fabric\Bundle\SwaggerBundle\Swagger;
 
+use ArrayObject;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Yaml\Parser;
@@ -18,8 +19,11 @@ class SwaggerDecorator implements NormalizerInterface
     ) {
     }
 
-    public function normalize($object, $format = null, array $context = [])
-    {
+    public function normalize(
+        $object,
+        $format = null,
+        array $context = []
+    ): float|int|bool|ArrayObject|array|string|null {
         $baseDoc = $this->defaultDecorator->normalize($object, $format, $context);
         $config = $this->parser->parseFile($this->configLocation);
 
@@ -27,7 +31,7 @@ class SwaggerDecorator implements NormalizerInterface
             $docs = $this->mergeDocRecursively($baseDoc, $config);
 
             if (isset($docs['paths'])) {
-                if ($docs['paths'] instanceof \ArrayObject) {
+                if ($docs['paths'] instanceof ArrayObject) {
                     $docs['paths']->ksort();
                 }
 
@@ -42,7 +46,7 @@ class SwaggerDecorator implements NormalizerInterface
         return $baseDoc;
     }
 
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return $this->defaultDecorator->supportsNormalization($data, $format);
     }
@@ -76,7 +80,7 @@ class SwaggerDecorator implements NormalizerInterface
         return $baseDoc;
     }
 
-    private function buildOverwriteConfig($baseDoc, $key, array $value)
+    private function buildOverwriteConfig($baseDoc, $key, array $value): array|arrayObject
     {
         if (isset($baseDoc[$key]) && $this->hasChildren($baseDoc[$key])) {
             return $this->mergeDocRecursively($baseDoc[$key], $value);
